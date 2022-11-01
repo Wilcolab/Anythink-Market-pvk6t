@@ -17,10 +17,7 @@ docker -v
 
 docker-compose -v.
 ```
-
 3. Run `docker-compose.yml` using `docker-compose u` from the project root directory.
-4. Once it has finished installing, check the following links:
-
-http://localhost:3000/api/ping - backend
-
-http://localhost:3001/register - frontend
+4. Once it has finished installing, check the following links if it they are working properly:
+    - http://localhost:3000/api/ping - backend
+    - http://localhost:3001/register - frontend
