@@ -23,11 +23,19 @@ ItemSchema.pre("validate", function(next) {
   if (!this.slug) {
     this.slugify();
   }
+  
+  if(!this.image) {
+    this.image = "https://i.postimg.cc/XJg7KZqx/placeholder.png"
+  }
 
   next();
 });
 
 ItemSchema.methods.slugify = function() {
+  // this.slug =
+  //   this.title.trim().split(" ").join("-") +
+  //   "-" +
+  //   ((Math.random() * Math.pow(36, 6)) | 0).toString(36);
   this.slug =
     slug(this.title) +
     "-" +
