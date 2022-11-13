@@ -11,6 +11,9 @@ const Comment = mongoose.model("Comment");
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
+const USER_ID = "637049d43b54b706af13d2ec"
+const ITEM_ID = "63704a1930469b06bc5b2401"
+
 // declare all characters
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -53,7 +56,7 @@ const generateComment = () => {
 
 try {    
     for(let i = 0; i < 100; i++) {
-        User.findById('63612087160e8b0054a04fb5')
+        User.findById(USER_ID)
         .then(function(user) {
             if (!user) {
                 return;
@@ -61,28 +64,28 @@ try {
             const item = new Item(generateItem());
             item.seller = user;
             item.save().then(function() {
-                console.log("Item data added")
+                // console.log("Item data added")
             });
         })
         
         const user = new User(generateUserInfo());
         user.setPassword(generatePassword());
         user.save().then(function() {
-            console.log("User data added")
+            // console.log("User data added")
         });
         
-        User.findById('63612087160e8b0054a04fb5')
+        User.findById(USER_ID)
         .then(async function(user) {
             if (!user) {
                 return;
             }
 
             const comment = new Comment(generateComment());
-            comment.item = await Item.findById('63702ed03b00e4039b70f156'); ;
+            comment.item = await Item.findById(ITEM_ID); ;
             comment.seller = user;
 
             comment.save().then(async function() {
-                console.log("Comment saved");
+                // console.log("Comment saved");
             });
         })
     }
