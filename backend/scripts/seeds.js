@@ -115,7 +115,8 @@ const commentPromise = new Promise(async (resolve) => {
 })
 
 const populateDb = async() => {   
-    await Promise.all([itemPromise, userPromise, commentPromise])
+    // await Promise.all([itemPromise, userPromise, commentPromise])
+    await Promise.all([itemPromise, userPromise])
 }
 
 try {    
