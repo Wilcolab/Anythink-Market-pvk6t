@@ -77,7 +77,6 @@ const userPromise = new Promise(async (resolve, reject) => {
         const user = new User(generateUserInfo());
         user.setPassword(generatePassword());
         const savedUser = await user.save()
-        console.log("Saved user: ", savedUser.email)
         userCount++;
     }
     console.log(`User: ${userCount}`)
@@ -89,29 +88,22 @@ function delay() {
 }
 
 async function delayedLog() {
-    User.findById(USER_ID)
-    .then(function(user) {
-        if (!user)
-            return;
-
-        const comment = new Comment(generateComment());
-        Item.findById(ITEM_ID).then(async function(savedItem) {
-            comment.item = savedItem
-            comment.seller = user;
-            
-            const savedComment = await comment.save()
-            console.log(`Comment: ${savedComment.title}`)
-            return savedComment;
-        })
-        
-    })
+    const user = await User.findById(USER_ID)
+    const comment = new Comment(generateComment());
+    
+    const item = await Item.findById(ITEM_ID)
+    comment.item = item
+    comment.seller = user;
+    
+    const savedComment = await comment.save()
+    return savedComment;
 }
 
 const commentPromise = new Promise(async (resolve) => {
     let commentArr = [];
     for (let i = 0; i < 10; i++) {
         const data = await delayedLog()
-        console.log(data)
+        console.log(data.body)
         commentArr.push(data)
     }
     console.log(`Comments length: ${commentArr.length}`)
