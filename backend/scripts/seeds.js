@@ -101,7 +101,7 @@ async function delayedLog() {
 
 const commentPromise = new Promise(async (resolve) => {
     let commentArr = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 100; i++) {
         const data = await delayedLog()
         console.log(data.body)
         commentArr.push(data)
