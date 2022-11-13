@@ -118,7 +118,8 @@ const commentPromise = new Promise(async (resolve) => {
 
 const populateDb = async() => {   
     await Promise.all([userPromise, commentPromise])
-    process.exit()
+    // process.exit()
+    mongoose.disconnect()
 }
 
 populateDb()
