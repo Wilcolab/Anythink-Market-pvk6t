@@ -60,11 +60,10 @@ const itemPromise = new Promise(async (resolve, reject) => {
     let itemCount = 0;
     for(let i = 0; i < 100; i++) {
         const user = await User.findById(USER_ID)   
-        if (!user) 
-            return;
         const item = new Item(generateItem());
         item.seller = user;
-        await item.save()
+        const savedItem = await item.save()
+        console.log(savedItem.title)
         itemCount++;
     }
     console.log(`Item: ${itemCount}`)
@@ -103,7 +102,7 @@ const commentPromise = new Promise(async (resolve) => {
     let commentArr = [];
     for (let i = 0; i < 100; i++) {
         const data = await delayedLog()
-        console.log(data.body)
+        // console.log(data.body)
         commentArr.push(data)
     }
     console.log(`Comments length: ${commentArr.length}`)
@@ -116,7 +115,7 @@ const commentPromise = new Promise(async (resolve) => {
 })
 
 const populateDb = async() => {   
-    await Promise.all([userPromise, commentPromise])
+    await Promise.all([itemPromise, userPromise, commentPromise])
     process.exit()
     // mongoose.disconnect()
 }
