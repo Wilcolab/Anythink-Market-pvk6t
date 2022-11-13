@@ -96,18 +96,15 @@ async function delayedLog() {
     comment.seller = user;
 
     await comment.save();
-    return {count: 1, comment};
+    return comment;
 }
 
 const commentPromise = new Promise(async (resolve) => {
-    let commentCount = 0;
     let commentArr = [];
     for (let i = 0; i < 100; i++) {
         const data = await delayedLog()
-        commentCount += data.count;
-        commentArr.push(data.comment)
+        commentArr.push(data)
     }
-    console.log(`Comment count: ${commentCount}`)
     console.log(`Comments length: ${commentArr.length}`)
     const savedItem = await Item.findById(ITEM_ID);
     savedItem.comments = savedItem.comments.concat(commentArr)
