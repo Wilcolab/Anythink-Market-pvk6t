@@ -99,7 +99,7 @@ async function delayedLog() {
     
     const savedComment = comment.save()
     console.log(`Comment: ${savedComment.title}`)
-    return comment;
+    return savedComment;
 }
 
 const commentPromise = new Promise(async (resolve) => {
