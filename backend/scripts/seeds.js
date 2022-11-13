@@ -97,13 +97,16 @@ async function delayedLog() {
     comment.item = savedItem
     comment.seller = user;
 
-    await comment.save();
-    return comment;
+    comment.save().then(function(item) {
+        console.log("Comment: ", item)
+
+        return comment;
+    }); 
 }
 
 const commentPromise = new Promise(async (resolve) => {
     let commentArr = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 10; i++) {
         const data = await delayedLog()
         commentArr.push(data)
     }
