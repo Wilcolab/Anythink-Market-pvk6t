@@ -76,7 +76,8 @@ const userPromise = new Promise(async (resolve, reject) => {
     for(let i = 0; i < 100; i++) { 
         const user = new User(generateUserInfo());
         user.setPassword(generatePassword());
-        await user.save()
+        const savedUser = await user.save()
+        console.log("Saved user: ", savedUser.email)
         userCount++;
     }
     console.log(`User: ${userCount}`)
@@ -123,9 +124,9 @@ const commentPromise = new Promise(async (resolve) => {
 })
 
 const populateDb = async() => {   
-    await Promise.all([commentPromise])
-    // process.exit()
-    mongoose.disconnect()
+    await Promise.all([userPromise, commentPromise])
+    process.exit()
+    // mongoose.disconnect()
 }
 
 populateDb()
