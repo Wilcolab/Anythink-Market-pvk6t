@@ -98,8 +98,7 @@ async function delayedLog() {
     comment.seller = user;
 
     comment.save().then(function(item) {
-        console.log("Comment: ", item)
-
+        console.log("Comment: ", item.title)
         return comment;
     }); 
 }
