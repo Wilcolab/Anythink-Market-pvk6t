@@ -10,7 +10,7 @@ const Item = mongoose.model("Item");
 const Comment = mongoose.model("Comment");
 
 // const db = mongoose.connect("mongodb://mongodb-node:27017/anythink-market", { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: true });
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
 const USER_ID = "63716255927cba0631cd4dec"
 const ITEM_ID = "6371625d927cba0631cd4ded"
@@ -33,6 +33,7 @@ const generateItem =  () => {
         title: slug("this is for testing") + "-" + generateString(10),
         description: "akobasiFIDEL",
         image: "https://i.etsystatic.com/14920883/r/il/a46901/3857029448/il_794xN.3857029448_6v42.jpg",
+        tagList: []
     }
 }
 
