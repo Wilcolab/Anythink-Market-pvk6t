@@ -88,18 +88,22 @@ function delay() {
 }
 
 async function delayedLog() {
-    const user = await User.findById(USER_ID)   
-    if (!user)
-        return;
+    User.findById(USER_ID)
+    .then(function(user) {
+        if (!user)
+            return;
 
-    const comment = new Comment(generateComment());
-    const savedItem = await Item.findById(ITEM_ID);
-    comment.item = savedItem
-    comment.seller = user;
-    
-    const savedComment = comment.save()
-    console.log(`Comment: ${savedComment.title}`)
-    return savedComment;
+        const comment = new Comment(generateComment());
+        Item.findById(ITEM_ID).then(async function(savedItem) {
+            comment.item = savedItem
+            comment.seller = user;
+            
+            const savedComment = await comment.save()
+            console.log(`Comment: ${savedComment.title}`)
+            return savedComment;
+        })
+        
+    })
 }
 
 const commentPromise = new Promise(async (resolve) => {
