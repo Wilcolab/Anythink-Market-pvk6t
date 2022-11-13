@@ -9,10 +9,11 @@ const User = mongoose.model("User");
 const Item = mongoose.model("Item");
 const Comment = mongoose.model("Comment");
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+// const db = mongoose.connect("mongodb://mongodb-node:27017/anythink-market", { useNewUrlParser: true, useUnifiedTopology: true });
+const db = mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-const USER_ID = "63713eac31398b0dc0753576"
-const ITEM_ID = "63713edb31398b0dc0753577"
+const USER_ID = "63714d5ac4cf36005e914db2"
+const ITEM_ID = "63714d71c4cf36005e914db3"
 
 // declare all characters
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -36,7 +37,7 @@ const generateItem =  () => {
 }
 
 const generateUserInfo = () => {
-    const name = generateString(8);
+    const name = generateString(20);
     
     return {
         username: name,
@@ -116,11 +117,9 @@ const userPromise = new Promise(async (resolve, reject) => {
 
 const populateDb = async() => {   
     // await Promise.all([itemPromise, userPromise, commentPromise])
-    await Promise.all([itemPromise, userPromise])
+    // await Promise.all([itemPromise, userPromise])
+    await Promise.all([itemPromise])
 }
 
-try {    
-    populateDb()
-} catch (error) {
-    console.log(error.stack);
-}
+console.log("testing")
+populateDb()
