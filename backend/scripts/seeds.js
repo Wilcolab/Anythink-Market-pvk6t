@@ -11,8 +11,8 @@ const Comment = mongoose.model("Comment");
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-const USER_ID = "637049d43b54b706af13d2ec"
-const ITEM_ID = "63704a1930469b06bc5b2401"
+const USER_ID = "63705ca6bc14d30b1a0739ef"
+const ITEM_ID = "63705cb9bc14d30b1a0739f0"
 
 // declare all characters
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -54,7 +54,8 @@ const generateComment = () => {
     }
 }
 
-try {    
+
+const myPromise = new Promise((resolve, reject) => {
     for(let i = 0; i < 100; i++) {
         User.findById(USER_ID)
         .then(function(user) {
@@ -64,31 +65,60 @@ try {
             const item = new Item(generateItem());
             item.seller = user;
             item.save().then(function() {
-                // console.log("Item data added")
+                console.log("Item data added")
             });
         })
         
         const user = new User(generateUserInfo());
         user.setPassword(generatePassword());
         user.save().then(function() {
-            // console.log("User data added")
+            console.log("User data added")
         });
-        
-        User.findById(USER_ID)
-        .then(async function(user) {
-            if (!user) {
-                return;
-            }
-
-            const comment = new Comment(generateComment());
-            comment.item = await Item.findById(ITEM_ID); ;
-            comment.seller = user;
-
-            comment.save().then(async function() {
-                // console.log("Comment saved");
-            });
-        })
     }
+    
+    resolve("")
+});
+
+function delay() {
+  return new Promise(resolve => setTimeout(resolve, 400));
+}
+
+async function delayedLog() {
+  // notice that we can await a function
+  // that returns a promise
+    await delay();
+    User.findById(USER_ID)
+    .then(async function(user) {
+        if (!user) {
+            return;
+        }
+
+        const comment = new Comment(generateComment());
+        const savedItem = await Item.findById(ITEM_ID);
+        comment.item = savedItem
+        comment.seller = user;
+
+        await comment.save();
+        console.log("Comment saved");
+        
+        savedItem.comments = savedItem.comments.concat([comment])
+        savedItem.save().then(function() {
+            console.log("User data added")
+        });
+    })
+    await delay();
+}
+
+const hi = async() => {
+    await myPromise
+    
+    for (let i = 0; i < 100; i++) {
+        await delayedLog()
+    }
+}
+
+try {    
+    hi()
 } catch (error) {
     console.log(error.stack);
 }
