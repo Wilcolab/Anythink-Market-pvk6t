@@ -63,7 +63,7 @@ const itemPromise = new Promise(async (resolve, reject) => {
         const item = new Item(generateItem());
         item.seller = user;
         const savedItem = await item.save()
-        console.log(savedItem.title)
+        // console.log(savedItem.title)
         itemCount++;
     }
     console.log(`Item: ${itemCount}`)
