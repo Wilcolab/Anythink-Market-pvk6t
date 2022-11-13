@@ -11,8 +11,8 @@ const Comment = mongoose.model("Comment");
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-const USER_ID = "63705ca6bc14d30b1a0739ef"
-const ITEM_ID = "63705cb9bc14d30b1a0739f0"
+const USER_ID = "63713eac31398b0dc0753576"
+const ITEM_ID = "63713edb31398b0dc0753577"
 
 // declare all characters
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -29,7 +29,7 @@ const generateString = (length) => {
 
 const generateItem =  () => {
     return {
-        title: slug("this is for testing") + "-" + ((Math.random() * Math.pow(36, 6)) | 0).toString(36),
+        title: slug("this is for testing") + "-" + generateString(10),
         description: "akobasiFIDEL",
         image: "https://i.etsystatic.com/14920883/r/il/a46901/3857029448/il_794xN.3857029448_6v42.jpg",
     }
@@ -54,71 +54,75 @@ const generateComment = () => {
     }
 }
 
-
-const myPromise = new Promise((resolve, reject) => {
+const itemPromise = new Promise(async (resolve, reject) => {
+    let itemCount = 0;
     for(let i = 0; i < 100; i++) {
-        User.findById(USER_ID)
-        .then(function(user) {
-            if (!user) {
-                return;
-            }
-            const item = new Item(generateItem());
-            item.seller = user;
-            item.save().then(function() {
-                console.log("Item data added")
-            });
-        })
-        
-        const user = new User(generateUserInfo());
-        user.setPassword(generatePassword());
-        user.save().then(function() {
-            console.log("User data added")
-        });
+        const user = await User.findById(USER_ID)   
+        if (!user) 
+            return;
+        const item = new Item(generateItem());
+        item.seller = user;
+        await item.save()
+        itemCount++;
     }
-    
+    console.log(`Item: ${itemCount}`)
     resolve("")
 });
 
-function delay() {
-  return new Promise(resolve => setTimeout(resolve, 400));
-}
+const userPromise = new Promise(async (resolve, reject) => {
+    let userCount = 0;
+    for(let i = 0; i < 100; i++) { 
+        const user = new User(generateUserInfo());
+        user.setPassword(generatePassword());
+        await user.save()
+        userCount++;
+    }
+    console.log(`User: ${userCount}`)
+    resolve("")
+});
+
+// function delay() {
+//   return new Promise(resolve => setTimeout(resolve, 400));
+// }
 
 async function delayedLog() {
-  // notice that we can await a function
-  // that returns a promise
-    await delay();
-    User.findById(USER_ID)
-    .then(async function(user) {
-        if (!user) {
-            return;
-        }
+    const user = await User.findById(USER_ID)   
+    if (!user)
+        return;
 
-        const comment = new Comment(generateComment());
-        const savedItem = await Item.findById(ITEM_ID);
-        comment.item = savedItem
-        comment.seller = user;
+    const comment = new Comment(generateComment());
+    const savedItem = await Item.findById(ITEM_ID);
+    comment.item = savedItem
+    comment.seller = user;
 
-        await comment.save();
-        console.log("Comment saved");
-        
-        savedItem.comments = savedItem.comments.concat([comment])
-        savedItem.save().then(function() {
-            console.log("User data added")
-        });
-    })
-    await delay();
+    await comment.save();
+    return {count: 1, comment};
 }
 
-const hi = async() => {
-    await myPromise
-    
+const commentPromise = new Promise(async (resolve) => {
+    let commentCount = 0;
+    let commentArr = [];
     for (let i = 0; i < 100; i++) {
-        await delayedLog()
+        const data = await delayedLog()
+        commentCount += data.count;
+        commentArr.push(data.comment)
     }
+    console.log(`Comment count: ${commentCount}`)
+    console.log(`Comments length: ${commentArr.length}`)
+    const savedItem = await Item.findById(ITEM_ID);
+    savedItem.comments = savedItem.comments.concat(commentArr)
+    await savedItem.save()
+    console.log("Done concatinating comments to item")
+    
+    resolve(commentCount)
+})
+
+const populateDb = async() => {   
+    await Promise.all([itemPromise, userPromise, commentPromise])
 }
 
 try {    
-    hi()
+    populateDb()
 } catch (error) {
     console.log(error.stack);
 }
