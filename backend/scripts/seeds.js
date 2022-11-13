@@ -85,34 +85,34 @@ const userPromise = new Promise(async (resolve, reject) => {
 //   return new Promise(resolve => setTimeout(resolve, 400));
 // }
 
-async function delayedLog() {
-    const user = await User.findById(USER_ID)   
-    if (!user)
-        return;
+// async function delayedLog() {
+//     const user = await User.findById(USER_ID)   
+//     if (!user)
+//         return;
 
-    const comment = new Comment(generateComment());
-    const savedItem = await Item.findById(ITEM_ID);
-    comment.item = savedItem
-    comment.seller = user;
+//     const comment = new Comment(generateComment());
+//     const savedItem = await Item.findById(ITEM_ID);
+//     comment.item = savedItem
+//     comment.seller = user;
 
-    await comment.save();
-    return comment;
-}
+//     await comment.save();
+//     return comment;
+// }
 
-const commentPromise = new Promise(async (resolve) => {
-    let commentArr = [];
-    for (let i = 0; i < 100; i++) {
-        const data = await delayedLog()
-        commentArr.push(data)
-    }
-    console.log(`Comments length: ${commentArr.length}`)
-    const savedItem = await Item.findById(ITEM_ID);
-    savedItem.comments = savedItem.comments.concat(commentArr)
-    await savedItem.save()
-    console.log("Done concatinating comments to item")
+// const commentPromise = new Promise(async (resolve) => {
+//     let commentArr = [];
+//     for (let i = 0; i < 100; i++) {
+//         const data = await delayedLog()
+//         commentArr.push(data)
+//     }
+//     console.log(`Comments length: ${commentArr.length}`)
+//     const savedItem = await Item.findById(ITEM_ID);
+//     savedItem.comments = savedItem.comments.concat(commentArr)
+//     await savedItem.save()
+//     console.log("Done concatinating comments to item")
     
-    resolve(commentCount)
-})
+//     resolve(commentCount)
+// })
 
 const populateDb = async() => {   
     // await Promise.all([itemPromise, userPromise, commentPromise])
