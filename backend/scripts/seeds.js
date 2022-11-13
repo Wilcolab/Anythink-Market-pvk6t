@@ -96,11 +96,10 @@ async function delayedLog() {
     const savedItem = await Item.findById(ITEM_ID);
     comment.item = savedItem
     comment.seller = user;
-
-    comment.save().then(function(item) {
-        console.log(`Comment: ${item.title}`)
-        return comment;
-    }); 
+    
+    const savedComment = comment.save()
+    console.log(`Comment: ${savedComment.title}`)
+    return comment;
 }
 
 const commentPromise = new Promise(async (resolve) => {
