@@ -98,7 +98,7 @@ async function delayedLog() {
     comment.seller = user;
 
     comment.save().then(function(item) {
-        console.log("Comment: ", item.title)
+        console.log(`Comment: ${item.title}`)
         return comment;
     }); 
 }
@@ -107,6 +107,7 @@ const commentPromise = new Promise(async (resolve) => {
     let commentArr = [];
     for (let i = 0; i < 10; i++) {
         const data = await delayedLog()
+        console.log(data)
         commentArr.push(data)
     }
     console.log(`Comments length: ${commentArr.length}`)
@@ -119,7 +120,7 @@ const commentPromise = new Promise(async (resolve) => {
 })
 
 const populateDb = async() => {   
-    await Promise.all([userPromise, commentPromise])
+    await Promise.all([commentPromise])
     // process.exit()
     mongoose.disconnect()
 }
