@@ -12,9 +12,8 @@ const Comment = mongoose.model("Comment");
 // const db = mongoose.connect("mongodb://mongodb-node:27017/anythink-market", { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-
-const USER_ID = "63714d5ac4cf36005e914db2"
-const ITEM_ID = "63714d71c4cf36005e914db3"
+const USER_ID = "63715a39b44d4605dcd4d0da"
+const ITEM_ID = "63715a43b44d4605dcd4d0db"
 
 // declare all characters
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -108,8 +107,10 @@ const commentPromise = new Promise(async (resolve) => {
         commentArr.push(data)
     }
     console.log(`Comments length: ${commentArr.length}`)
-    const savedItem = await Item.findById(ITEM_ID);
-    savedItem.comments = commentArr
+    const savedItem = await Item.findOneAndUpdate({_id: ITEM_ID}, {
+        comments: commentArr
+    }, {new: true});
+    // savedItem.comments = commentArr
     await savedItem.save()
     console.log("Done concatinating comments to item")
     
