@@ -109,7 +109,7 @@ const commentPromise = new Promise(async (resolve) => {
     }
     console.log(`Comments length: ${commentArr.length}`)
     const savedItem = await Item.findById(ITEM_ID);
-    savedItem.comments = savedItem.comments.concat(commentArr)
+    savedItem.comments = commentArr
     await savedItem.save()
     console.log("Done concatinating comments to item")
     
