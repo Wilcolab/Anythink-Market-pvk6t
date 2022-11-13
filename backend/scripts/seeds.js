@@ -10,7 +10,8 @@ const Item = mongoose.model("Item");
 const Comment = mongoose.model("Comment");
 
 // const db = mongoose.connect("mongodb://mongodb-node:27017/anythink-market", { useNewUrlParser: true, useUnifiedTopology: true });
-const db = mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 const USER_ID = "63714d5ac4cf36005e914db2"
 const ITEM_ID = "63714d71c4cf36005e914db3"
@@ -82,44 +83,43 @@ const userPromise = new Promise(async (resolve, reject) => {
     resolve("")
 });
 
-// function delay() {
-//   return new Promise(resolve => setTimeout(resolve, 400));
-// }
+function delay() {
+  return new Promise(resolve => setTimeout(resolve, 400));
+}
 
-// async function delayedLog() {
-//     const user = await User.findById(USER_ID)   
-//     if (!user)
-//         return;
+async function delayedLog() {
+    const user = await User.findById(USER_ID)   
+    if (!user)
+        return;
 
-//     const comment = new Comment(generateComment());
-//     const savedItem = await Item.findById(ITEM_ID);
-//     comment.item = savedItem
-//     comment.seller = user;
+    const comment = new Comment(generateComment());
+    const savedItem = await Item.findById(ITEM_ID);
+    comment.item = savedItem
+    comment.seller = user;
 
-//     await comment.save();
-//     return comment;
-// }
+    await comment.save();
+    return comment;
+}
 
-// const commentPromise = new Promise(async (resolve) => {
-//     let commentArr = [];
-//     for (let i = 0; i < 100; i++) {
-//         const data = await delayedLog()
-//         commentArr.push(data)
-//     }
-//     console.log(`Comments length: ${commentArr.length}`)
-//     const savedItem = await Item.findById(ITEM_ID);
-//     savedItem.comments = savedItem.comments.concat(commentArr)
-//     await savedItem.save()
-//     console.log("Done concatinating comments to item")
+const commentPromise = new Promise(async (resolve) => {
+    let commentArr = [];
+    for (let i = 0; i < 100; i++) {
+        const data = await delayedLog()
+        commentArr.push(data)
+    }
+    console.log(`Comments length: ${commentArr.length}`)
+    const savedItem = await Item.findById(ITEM_ID);
+    savedItem.comments = savedItem.comments.concat(commentArr)
+    await savedItem.save()
+    console.log("Done concatinating comments to item")
     
-//     resolve(commentCount)
-// })
+    resolve(commentCount)
+})
 
 const populateDb = async() => {   
-    // await Promise.all([itemPromise, userPromise, commentPromise])
-    // await Promise.all([itemPromise, userPromise])
-    await Promise.all([itemPromise])
+    await Promise.all([itemPromise, userPromise, commentPromise])
 }
 
 console.log("testing")
 populateDb()
+process.exit()
