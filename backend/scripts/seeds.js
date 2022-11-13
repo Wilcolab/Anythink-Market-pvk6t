@@ -113,13 +113,12 @@ const commentPromise = new Promise(async (resolve) => {
     await savedItem.save()
     console.log("Done concatinating comments to item")
     
-    resolve(commentCount)
+    resolve("")
 })
 
 const populateDb = async() => {   
     await Promise.all([itemPromise, userPromise, commentPromise])
+    process.exit()
 }
 
-console.log("testing")
 populateDb()
-process.exit()
