@@ -10,10 +10,10 @@ const Item = mongoose.model("Item");
 const Comment = mongoose.model("Comment");
 
 // const db = mongoose.connect("mongodb://mongodb-node:27017/anythink-market", { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: true });
 
-const USER_ID = "63715a39b44d4605dcd4d0da"
-const ITEM_ID = "63715a43b44d4605dcd4d0db"
+const USER_ID = "63716255927cba0631cd4dec"
+const ITEM_ID = "6371625d927cba0631cd4ded"
 
 // declare all characters
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
