@@ -110,8 +110,6 @@ const commentPromise = new Promise(async (resolve) => {
     const savedItem = await Item.findOneAndUpdate({_id: ITEM_ID}, {
         comments: commentArr
     }, {new: true});
-    // savedItem.comments = commentArr
-    await savedItem.save()
     console.log("Done concatinating comments to item")
     
     resolve("")
