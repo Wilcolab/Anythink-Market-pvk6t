@@ -57,7 +57,7 @@ router.get("/", auth.optional, function(req, res, next) {
     req.query.seller ? User.findOne({ username: req.query.seller }) : null,
     req.query.favorited ? User.findOne({ username: req.query.favorited }) : null
   ])
-    .then(function(results) {
+    .then(async function(results) {
       var seller = results[0];
       var favoriter = results[1];
 
