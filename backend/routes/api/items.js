@@ -38,7 +38,7 @@ router.param("comment", function(req, res, next, id) {
 
 router.get("/", auth.optional, function(req, res, next) {
   var query = {};
-  var limit = 10;
+  var limit = 100;
   var offset = 0;
 
   // if (typeof req.query.limit !== "undefined") {
@@ -79,7 +79,8 @@ router.get("/", auth.optional, function(req, res, next) {
           .exec(),
         Item.count(query).exec(),
         req.payload ? User.findById(req.payload.id) : null
-      ]).then(async function(results) {
+      ])
+      .then(async function(results) {
         var items = results[0];
         var itemsCount = results[1];
         var user = results[2];
