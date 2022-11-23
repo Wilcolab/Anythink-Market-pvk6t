@@ -11,8 +11,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSearch: (tab, pager, payload) =>
-    dispatch({ type: SEARCH_TITLE, tab, pager, payload }),
+  onSearch: (tab, pager, payload, searchValue) =>
+    dispatch({ type: SEARCH_TITLE, tab, pager, payload, searchValue }),
 });
 
 const Banner = (props) => {
@@ -25,7 +25,8 @@ const Banner = (props) => {
       props.onSearch(
         "all",
         agent.Items.search,
-        agent.Items.search(searchValue)
+        agent.Items.search(searchValue),
+        event.target.value
       );
       // agent.Items.search(searchValue).then(ans => {
       //   console.log(ans)

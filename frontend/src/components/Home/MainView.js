@@ -72,27 +72,39 @@ const mapDispatchToProps = (dispatch) => ({
 const MainView = (props) => {
   return (
     <div>
-      <div className="feed-toggle">
-        <ul className="nav nav-tabs">
-          <YourFeedTab
-            token={props.token}
-            tab={props.tab}
-            onTabClick={props.onTabClick}
+      {props.itemsCount === 0 && (
+        <div className="no-result-container">
+          <i className="ion-sad"></i>
+          <p id="empty">
+            No items found for "<span>{props.searchValue}</span>"
+          </p>
+        </div>
+      )}
+      {props.itemsCount > 0 && (
+        <>
+          <div className="feed-toggle">
+            <ul className="nav nav-tabs">
+              <YourFeedTab
+                token={props.token}
+                tab={props.tab}
+                onTabClick={props.onTabClick}
+              />
+
+              <GlobalFeedTab tab={props.tab} onTabClick={props.onTabClick} />
+
+              <TagFilterTab tag={props.tag} />
+            </ul>
+          </div>
+
+          <ItemList
+            pager={props.pager}
+            items={props.items}
+            loading={props.loading}
+            itemsCount={props.itemsCount}
+            currentPage={props.currentPage}
           />
-
-          <GlobalFeedTab tab={props.tab} onTabClick={props.onTabClick} />
-
-          <TagFilterTab tag={props.tag} />
-        </ul>
-      </div>
-
-      <ItemList
-        pager={props.pager}
-        items={props.items}
-        loading={props.loading}
-        itemsCount={props.itemsCount}
-        currentPage={props.currentPage}
-      />
+        </>
+      )}
     </div>
   );
 };
