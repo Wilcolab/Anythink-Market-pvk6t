@@ -22,15 +22,13 @@ const Banner = (props) => {
     setSearchValue(event.target.value);
 
     if (event.target.value.length >= 3) {
-      props.onSearch(
-        "all",
-        agent.Items.search,
-        agent.Items.search(searchValue),
-        event.target.value
-      );
-      // agent.Items.search(searchValue).then(ans => {
-      //   console.log(ans)
-      // })
+      agent.Items.search(searchValue).then((result) => {
+        if (result.itemsCount === 0) {
+          setSearchValue("");
+        }
+
+        props.onSearch("all", agent.Items.search, result, event.target.value);
+      });
     }
   };
 
