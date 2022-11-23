@@ -22,7 +22,7 @@ const Banner = (props) => {
     setSearchValue(event.target.value);
 
     if (event.target.value.length >= 3) {
-      agent.Items.search(searchValue).then((result) => {
+      agent.Items.search(event.target.value).then((result) => {
         props.onSearch("all", agent.Items.search, result, event.target.value);
         // if (result.itemsCount === 0) {
         //   setSearchValue("");
