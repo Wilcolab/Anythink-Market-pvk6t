@@ -51,8 +51,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "format": "yarn prettier --write .",
-    "lint": "yarn eslint . && yarn prettier --check .",
-    "jest": "jest -c src/jest.config.js src/search-empty.test.js"
+    "lint": "yarn eslint . && yarn prettier --check ."
   },
   "eslintConfig": {
     "extends": [
