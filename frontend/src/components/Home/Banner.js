@@ -6,8 +6,8 @@ import { connect } from "react-redux";
 
 const mapStateToProps = (state) => ({
   ...state.itemList,
-  tags: state.home.tags,
-  token: state.common.token,
+  // tags: state.home.tags,
+  // token: state.common.token,
 });
 
 const mapDispatchToProps = (dispatch) => ({
