@@ -24,9 +24,9 @@ const Banner = (props) => {
     if (event.target.value.length >= 3) {
       agent.Items.search(searchValue).then((result) => {
         props.onSearch("all", agent.Items.search, result, event.target.value);
-        if (result.itemsCount === 0) {
-          setSearchValue("");
-        }
+        // if (result.itemsCount === 0) {
+        //   setSearchValue("");
+        // }
       });
     }
   };
@@ -34,7 +34,11 @@ const Banner = (props) => {
   return (
     <div className="banner text-white">
       <div className="container p-4 text-center">
-        <img src={logo} alt="banner" />
+        <img
+          src={logo}
+          alt="banner"
+          style={{ width: "50px", height: "50px" }}
+        />
         <div className="banner-text-container">
           <span>A place to </span>
           <span id="get-part"> get</span>

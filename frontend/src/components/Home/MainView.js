@@ -80,12 +80,16 @@ const MainView = (props) => {
           </p>
         </div>
       )} */}
-      <div className="no-result-container" id="empty" style={{display: props.itemsCount === 0 ? "block" : "none"}}>
-          <i className="ion-sad"></i>
-          <p >
-            No items found for "<span>{props.searchValue}</span>"
-          </p>
-        </div>
+      <div
+        className="no-result-container"
+        id="empty"
+        style={{ display: props.itemsCount === 0 ? "block" : "none" }}
+      >
+        <i className="ion-sad"></i>
+        <p>
+          No items found for "<span>{props.searchValue}</span>"
+        </p>
+      </div>
       {props.itemsCount > 0 && (
         <>
           <div className="feed-toggle">
