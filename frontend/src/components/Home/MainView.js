@@ -72,14 +72,20 @@ const mapDispatchToProps = (dispatch) => ({
 const MainView = (props) => {
   return (
     <div>
-      {props.itemsCount === 0 && (
+      {/* {props.itemsCount === 0 && (
         <div className="no-result-container">
           <i className="ion-sad"></i>
           <p id="empty">
             No items found for "<span>{props.searchValue}</span>"
           </p>
         </div>
-      )}
+      )} */}
+      <div className="no-result-container" id="empty" style={{display: props.itemsCount === 0 ? "block" : "none"}}>
+          <i className="ion-sad"></i>
+          <p >
+            No items found for "<span>{props.searchValue}</span>"
+          </p>
+        </div>
       {props.itemsCount > 0 && (
         <>
           <div className="feed-toggle">
