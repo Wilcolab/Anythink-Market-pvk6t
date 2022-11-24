@@ -63,6 +63,8 @@ body {
 .banner-text-container {
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .search-container {
@@ -111,4 +113,8 @@ body {
 
 #empty span {
   font-weight: bolder;
+}
+
+#get-part {
+  cursor: pointer;
 }
