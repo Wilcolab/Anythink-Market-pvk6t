@@ -11,8 +11,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSearch: (tab, pager, payload) =>
-    dispatch({ type: SEARCH_TITLE, tab, pager, payload }),
+  onSearch: (tab, pager, payload, searchValue) =>
+    dispatch({ type: SEARCH_TITLE, tab, pager, payload, searchValue }),
 });
 
 const Banner = (props) => {
@@ -22,21 +22,23 @@ const Banner = (props) => {
     setSearchValue(event.target.value);
 
     if (event.target.value.length >= 3) {
-      props.onSearch(
-        "all",
-        agent.Items.search,
-        agent.Items.search(searchValue)
-      );
-      // agent.Items.search(searchValue).then(ans => {
-      //   console.log(ans)
-      // })
+      agent.Items.search(event.target.value).then((result) => {
+        props.onSearch("all", agent.Items.search, result, event.target.value);
+        // if (result.itemsCount === 0) {
+        //   setSearchValue("");
+        // }
+      });
     }
   };
 
   return (
     <div className="banner text-white">
       <div className="container p-4 text-center">
-        <img src={logo} alt="banner" />
+        <img
+          src={logo}
+          alt="banner"
+          style={{ width: "50px", height: "50px" }}
+        />
         <div className="banner-text-container">
           <span>A place to </span>
           <span id="get-part"> get</span>
