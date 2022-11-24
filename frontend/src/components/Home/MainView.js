@@ -83,7 +83,7 @@ const MainView = (props) => {
       <div
         className="no-result-container"
         id="empty"
-        style={{ display: props.itemsCount === 0 ? "block" : "none" }}
+        style={{ display: props.itemsCount === 0 && props.searchValue ? "block" : "none" }}
       >
         <i className="ion-sad"></i>
         <p>
