@@ -17,6 +17,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const Banner = (props) => {
   const [searchValue, setSearchValue] = useState("");
+  const [toggleSearch, setToggleSearch] = useState(false);
 
   const handleSearch = async (event) => {
     setSearchValue(event.target.value);
@@ -24,34 +25,36 @@ const Banner = (props) => {
     if (event.target.value.length >= 3) {
       agent.Items.search(event.target.value).then((result) => {
         props.onSearch("all", agent.Items.search, result, event.target.value);
-        // if (result.itemsCount === 0) {
-        //   setSearchValue("");
-        // }
       });
     }
+  };
+
+  const handleToggleSearch = () => {
+    setToggleSearch((prev) => !prev);
   };
 
   return (
     <div className="banner text-white">
       <div className="container p-4 text-center">
-        <img
-          src={logo}
-          alt="banner"
-          style={{ width: "50px", height: "50px" }}
-        />
+        <img src={logo} alt="banner" />
         <div className="banner-text-container">
-          <span>A place to </span>
-          <span id="get-part"> get</span>
-          <div className="search-container">
-            <input
-              id="search-box"
-              type="text"
-              placeholder="What is it that you truly desire?"
-              value={searchValue}
-              onChange={handleSearch}
-            />
-            <i className="ion-search"></i>
-          </div>
+          <span>A place to &nbsp;</span>
+          <span id="get-part" onClick={handleToggleSearch}>
+            {" "}
+            get &nbsp;
+          </span>
+          {toggleSearch && (
+            <div className="search-container">
+              <input
+                id="search-box"
+                type="text"
+                placeholder="What is it that you truly desire?"
+                value={searchValue}
+                onChange={handleSearch}
+              />
+              <i className="ion-search"></i>
+            </div>
+          )}
           <span> the cool stuff.</span>
         </div>
       </div>
