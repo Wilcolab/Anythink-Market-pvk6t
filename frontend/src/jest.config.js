@@ -1,5 +1,5 @@
 "use strict";
 module.exports = {
-    preset: "jest-puppeteer",
+  preset: "jest-puppeteer",
 };
 //# sourceMappingURL=jest.config.js.map
