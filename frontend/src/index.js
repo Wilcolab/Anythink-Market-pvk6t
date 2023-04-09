@@ -6,11 +6,15 @@ import { store } from "./store";
 
 import App from "./components/App";
 import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+import theme from "./styles/theme";
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter basename="/">
-      <App />
+      <ThemeProvider theme={theme}>       
+        <App />
+      </ThemeProvider>
     </BrowserRouter>
   </Provider>,
 
