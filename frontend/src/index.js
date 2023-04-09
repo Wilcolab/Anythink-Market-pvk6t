@@ -8,11 +8,13 @@ import App from "./components/App";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import theme from "./styles/theme";
+import GlobalStyle from "./styles/GlobalStyle";
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter basename="/">
-      <ThemeProvider theme={theme}>       
+      <ThemeProvider theme={theme}>    
+        <GlobalStyle />   
         <App />
       </ThemeProvider>
     </BrowserRouter>
